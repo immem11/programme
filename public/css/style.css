@@ -1,0 +1,73 @@
+table{
+	width: 100%;
+	font-size: 80%;
+	min-width:10%;
+}
+
+#totalContent{
+	width:100%;
+	height: 100%;
+}
+
+.contentDiv{
+	margin-top: 3%;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+.divider{
+	border-top: 2px solid black;
+	padding: 1%;
+}
+
+.hasInfo{
+	background-color: #cfe7f6;
+}
+
+.breakLine{
+	background: white;
+	margin: 2%;
+}
+
+.firstColumn{
+	width: 10%;
+	padding: 1%;
+}
+
+.firstPosterColumn{
+	width: 10%;
+	padding: 1%;
+}
+
+.secondPosterColumn{
+	width: 80%;
+	padding: 1%;
+}
+
+.thirdPosterColumn{
+	width: 10%;
+	padding: 1%;
+}
+
+.secondColumn{
+	width: 90%;
+	padding: 1%;
+}
+
+#resultsInfo{
+	display: none;
+}
+
+#scheduleInfo{
+	display: block;
+}
+
+
+.scheduletable{
+	margin-top: 5%;
+}
+
+tbody tr:hover{
+	background-color: #deedde;
+	cursor: pointer;
+}
