@@ -49,7 +49,7 @@ function constructSchedule(schedule, sessions, allPosters){
 		else if(rowData[1].indexOf('Discussion session') > -1){
 			getDiscussionInformation(rowData, allPosters, sessions);
 		}
-		else if(rowData[1].indexOf('Industry session') > -1){
+		else if(rowData[1].indexOf('Industry Session') > -1){
 			getIndustryInformation(rowData, sessions);
 		}
 		else getSessionInformation(rowData, sessions);
@@ -66,15 +66,16 @@ function getSessionInformation(rowData, sessions){
 		$('#bodysessionInfoTable').empty();
 		$('#sessionInfoSection').empty();
 		var toAppend = '';
-		toAppend += '<tr><td class="secondColumn">Title</td><td class="firstColumn">Speaker</td></tr>';
+		toAppend += '<tr><td class="timeColumn">Time</td><td class="secondColumn">Title</td><td class="firstColumn">Speaker</td></tr>';
 		$('#headersessionInfoTable').append(toAppend);
 		toAppend = '';
+		console.log(sessionToSearch);
 		toAppend += '<p>' + sessions[sessionToSearch].subject + '</p>';
 		toAppend += '<p>' + sessions[sessionToSearch].time + '</p>';
 		$('#sessionInfoSection').append(toAppend);
 		toAppend = '';
 		for(i in sessions[sessionToSearch].presentations){
-			toAppend += '<tr><td class="secondColumn">' + sessions[sessionToSearch].presentations[i].title + '</td><td class="firstColumn">' + sessions[sessionToSearch].presentations[i].speaker + '</td></tr>';
+			toAppend += '<tr><td class="timeColumn"><b>' + sessions[sessionToSearch].presentations[i].time + '</b></td><td class="secondColumn">' + sessions[sessionToSearch].presentations[i].title + '</td><td class="firstColumn">' + sessions[sessionToSearch].presentations[i].speaker + '</td></tr>';
 		}
 		$('#bodysessionInfoTable').append(toAppend);
 
@@ -88,7 +89,7 @@ function getSessionInformation(rowData, sessions){
 	        return $(this).text();
 	    }).get();
 
-	    getInformation(sessions, rowData[0], 'listviewTitle');
+	    getInformation(sessions, rowData[1], 'listviewTitle');
 	});
 
 }
@@ -222,3 +223,26 @@ function getPosterSessionInformation(rowData, allPosters, sessions){
 	});
 
 }
+
+function getAnnouncementInformation(announcements){
+	$('#headertableAnnouncements').empty();
+	$('#bodytableAnnouncements').empty();
+	var toAppend = '';
+
+	$('#headertableAnnouncements').append('<tr style="text-align:center;"><td class="timeColumn"><b>Day</b></td><td class="firstColumn"><b>Time</b></td><td class="secondColumn" style="text-align:left;"><b>Announcement</b></td></tr>');
+
+	for(var i=announcements.length-1; i>-1; i--){
+
+		for(var j=announcements[i].length-1; j>-1; j--){
+			toAppend += '<tr style="text-align:center;"><td class="timeColumn">' + announcements[i][j].day + '</td><td class="firstColumn">' + announcements[i][j].time + '</td><td class="secondColumn" style="text-align:left;">' + announcements[i][j].announcement + '</td><td></tr>';
+		}
+
+	}
+
+	$('#bodytableAnnouncements').append(toAppend);
+}
+
+
+
+
+

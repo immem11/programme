@@ -4,7 +4,8 @@ $(document).ready(function(){
 		scheduleLocation : 'public/scheduleFiles/scheduleTest.txt',
 		sessionsLocation : 'public/scheduleFiles/sessionsTest.txt',
 		presentationsLocation : 'public/scheduleFiles/presentationsTest.txt',
-		postersLocation : 'public/scheduleFiles/postersTest.txt'
+		postersLocation : 'public/scheduleFiles/postersTest.txt',
+		announcementsLocation : 'public/scheduleFiles/announcementsTest.txt'
 	}
 	
 	readSchedule(scheduleObject, function(scheduleData){
@@ -15,12 +16,15 @@ $(document).ready(function(){
 		schedule = scheduleData.schedule;
 		allPosters = scheduleData.allPosters;
 		allPresenters = scheduleData.allPresenters;
+		announcements = scheduleData.announcements;
 
 		assignAttributesToSearch(sessions, allPosters, allnames, 'listviewName');
 		assignAttributesToSearch(sessions, allPosters, alltitles, 'listviewTitle');
 		constructSchedule(schedule, sessions, allPosters);
+		getAnnouncementInformation(announcements);
 		//exportPosters(allPosters);
 		//getPresenterInfo(allnames, allPosters, sessions)
+		//getOralNames(sessions);
 	});
 
 	$('.buttonHome').click(function(){
@@ -158,8 +162,9 @@ function displayResults(TotalResults, dataInfo, showBack){
 					affiliations[p] = '(' + (parseInt(p)+parseInt(1)) + ')' + affiliations[p];
 				}
 				toAppend += '<tr><td class="firstColumn">Affiliation:</td><td class="secondColumn"> ' + affiliations.toString() + '</td></tr>';
-				toAppend += '<tr><td class="firstColumn">Session:</td><td class="secondColumn"> ' + results[i].sessionInfo[1] + '</td></tr>';
-				//toAppend += '<tr><td class="firstColumn">Schedule:</td><td class="secondColumn"> ' + results[i].sessionInfo[2] + '</td></tr>';
+				toAppend += '<tr><td class="firstColumn">Session:</td><td class="secondColumn"> <b>' + results[i].sessionInfo[1] + '</b>, ' + results[i].sessionInfo[2] + '</td></tr>';
+
+				if(results[i].presentation.time) toAppend += '<tr><td class="firstColumn">Time of Presentation:</td><td class="secondColumn"> ' + results[i].presentation.time + '</td></tr>';
 				toAppend += '<tr></tr>';
 			}
 
@@ -236,6 +241,42 @@ function exportPosters(sessions, posterInfo, allNames){
 	$('#scheduleInfo').append(a);
 	$('#linkDownloadMatrix').attr("href", encodedUriMatrix).attr('download', "posters.txt");
 	$('#linkDownloadMatrix').trigger('click');
+}
+
+function getOralNames(sessions){
+	var names = [];
+	var objectOfNames = {};
+	var results = '';
+
+	for(z in sessions){
+		for(c in sessions[z].presentations){
+			var nameSplited = sessions[z].presentations[c].speaker.split(' ');
+			var lengthName = nameSplited.length;
+			var firstName = sessions[z].presentations[c].speaker.split(' ')[0];
+			var lastName = sessions[z].presentations[c].speaker.split(' ')[lengthName-1];
+
+			var newName = firstName + ' ' + lastName;
+
+			if(!objectOfNames.hasOwnProperty(newName)){
+				names.push(newName);
+				objectOfNames[newName] = true;
+			}
+		}
+	}
+
+	for(v in names){
+		results += names[v] + '\n';
+		//results += '\n';
+	}
+
+	var encodedUriMatrix = 'data:text/csv;charset=utf-8,' + encodeURIComponent(results);
+	
+	var a = $('<p>Download <a id="linkDownloadMatrix">Distance Matrix</a></p>');
+
+	$('#scheduleInfo').append(a);
+	$('#linkDownloadMatrix').attr("href", encodedUriMatrix).attr('download', "posters.txt");
+	$('#linkDownloadMatrix').trigger('click');
+
 }
 
 function getPresenterInfo(allNames, allPosters, sessions){

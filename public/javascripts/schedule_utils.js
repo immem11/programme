@@ -4,7 +4,8 @@ function schedule_utils(){
 		getSessions: getSessions,
 		getSchedule: getSchedule,
 		getPresentations: getPresentations,
-		getPosters: getPosters
+		getPosters: getPosters,
+		getAnnouncements: getAnnouncements
 	}
 }
 
@@ -69,6 +70,25 @@ function getSchedule(scheduleLocation, callback){
 	});
 }
 
+function getAnnouncements(announcementsLocation, callback){
+
+	var announcements = [];
+	var day = -1
+
+	read_csv(announcementsLocation, function(results){
+		var prevDay = -1;
+		for(i in results){
+			if(prevDay != results[i].day){
+				announcements.push([]);
+				day++;
+				prevDay = results[i].day;
+			}
+			announcements[day].push({day: results[i].day, time:results[i].time, announcement: results[i].announcement});
+		}
+		callback(announcements);
+	});
+}
+
 function getPresentations(sessions, allPosters, presentationsLocation, callback){
 
 	var presentations = {};
@@ -92,6 +112,7 @@ function getPresentations(sessions, allPosters, presentationsLocation, callback)
 			presentations[results[i].id].speaker = results[i].speaker;
 			presentations[results[i].id].authors = results[i].authors;
 			presentations[results[i].id].affiliations = results[i].affiliations.split(';');
+			presentations[results[i].id].time = results[i].time;
 		}
 
 		sessions[currentSessionID].presentations = presentations;
