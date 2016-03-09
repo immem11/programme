@@ -1,5 +1,7 @@
 <html>
 <head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
 	<title>IMMEM XI Schedule</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="public/css/jquery.mobile-1.4.5.min.css">
@@ -43,6 +45,21 @@
 
 	    <div data-role="footer" data-position="fixed" style="text-align:center;">
 			<a id="buttonScheduleSponsor" href="#mainPage" class="ui-btn ui-icon-home ui-btn-icon-left ui-shadow ui-corner-all">View Schedule</a>
+		</div><!-- /footer -->
+	</div>
+
+	<div data-role="page" data-theme="a" id="abstracts-page" class="my-page" data-url="twitter-page">
+		<div id="abstractResults">
+		</div>
+
+		<div data-role="footer" data-position="fixed" style="text-align:left;">
+			<div class="ui-grid-b">
+			    <div class="ui-block-a"><div style="text-align:left;">
+					<a id="buttonBackAbstract" href="#mainPage" style="text-align:left;" class="ui-btn ui-icon-back ui-btn-icon-left ui-shadow ui-corner-all">Back</a>
+				</div></div>
+			    <div class="ui-block-b"><div style="text-align:center;">
+				</div></div>
+			</div><!-- /grid-b -->
 		</div><!-- /footer -->
 	</div>
 
@@ -139,6 +156,7 @@
 
 			<div id="totalContentsessoinInfo">
 				<div id="sessionInfoSection"></div>
+				<div id="AbstractsInfoSection"></div>
 				<div id="sessionInfoDiv" class="sessiontable">
 					<div id="sessionInfoTableContainer"></div>
 					<table id="sessionInfoTable" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-popup-theme="a">

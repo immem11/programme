@@ -8,8 +8,6 @@ function constructSchedule(schedule, sessions, allPosters){
 				days.push(currentDay);
 				prevDay = currentDay;
 			}
-			//days.push(sessions[i].time.split(',').slice(0,sessions[i].time.split(',').length-1));
-		//var currentDay = schedule[i].time.split(',').slice(0,schedule[i].time.split(',').length-1);
 	}
 
 	var toCheck = [];
@@ -65,11 +63,12 @@ function getSessionInformation(rowData, sessions){
 		$('#headersessionInfoTable').empty();
 		$('#bodysessionInfoTable').empty();
 		$('#sessionInfoSection').empty();
+		$('#AbstractsInfoSection').empty();
 		var toAppend = '';
 		toAppend += '<tr><td class="timeColumn">Time</td><td class="secondColumn">Title</td><td class="firstColumn">Speaker</td></tr>';
 		$('#headersessionInfoTable').append(toAppend);
 		toAppend = '';
-		console.log(sessionToSearch);
+		$('#AbstractsInfoSection').append('<a id="anchorAbstractInfo" href="#abstracts-page" class="ui-btn ui-icon-info ui-btn-icon-left ui-shadow ui-corner-all">Abstracts available here</a>');
 		toAppend += '<p>' + sessions[sessionToSearch].subject + '</p>';
 		toAppend += '<p>' + sessions[sessionToSearch].time + '</p>';
 		$('#sessionInfoSection').append(toAppend);
@@ -92,6 +91,13 @@ function getSessionInformation(rowData, sessions){
 	    getInformation(sessions, rowData[1], 'listviewTitle');
 	});
 
+	$('#anchorAbstractInfo').click(function(){
+
+		var htmlAbstractName = 'OP_S' + sessionToSearch + '.html';
+		showSessionAbstracts("public/abstracts/Webpages/" + htmlAbstractName);
+
+	});
+
 }
 
 function getIndustryInformation(rowData, sessions){
@@ -101,9 +107,12 @@ function getIndustryInformation(rowData, sessions){
 	$('#headersessionInfoTable').empty();
 	$('#bodysessionInfoTable').empty();
 	$('#sessionInfoSection').empty();
+	$('#AbstractsInfoSection').empty();
 	var toAppend = '';
 	toAppend += '<tr><td class="secondColumn">Title</td><td class="firstColumn">Speaker</td></tr>';
 	$('#headersessionInfoTable').append(toAppend);
+
+	$('#AbstractsInfoSection').append('<a id="anchorAbstractIndustryInfo" href="#abstracts-page" class="ui-btn ui-icon-info ui-btn-icon-left ui-shadow ui-corner-all">Abstracts available here</a>');
 	toAppend = '';
 	toAppend += '<p>' + sessions[sessionToSearch].subject + '</p>';
 	toAppend += '<p>' + sessions[sessionToSearch].time + '</p>';
@@ -126,6 +135,13 @@ function getIndustryInformation(rowData, sessions){
 	    getInformation(sessions, rowData[0], 'listviewTitle');
 	});
 
+	$('#anchorAbstractIndustryInfo').click(function(){
+
+		var htmlAbstractName = 'OP_I' + sessionToSearch.split('IP')[1] + '.html';
+		showSessionAbstracts("public/abstracts/Webpages/" + htmlAbstractName);
+
+	});
+
 }
 
 function getDiscussionInformation(rowData, allPosters, sessions){
@@ -136,6 +152,7 @@ function getDiscussionInformation(rowData, allPosters, sessions){
 	$('#headersessionInfoTable').empty();
 	$('#bodysessionInfoTable').empty();
 	$('#sessionInfoSection').empty();
+	$('#AbstractsInfoSection').empty();
 
 	var toAppend = '';
 	toAppend = '';
@@ -144,6 +161,8 @@ function getDiscussionInformation(rowData, allPosters, sessions){
 	toAppend = '';
 
 	if(sessionToSearch=='DS1'){
+
+		$('#AbstractsInfoSection').append('<a id="anchorAbstractDiscussionInfo" href="#abstracts-page" class="ui-btn ui-icon-info ui-btn-icon-left ui-shadow ui-corner-all">Abstracts available here</a>');
 
 		var currentIssue = -1;
 		for(i in allPosters[sessionToSearch].posters){
@@ -165,6 +184,13 @@ function getDiscussionInformation(rowData, allPosters, sessions){
 				totalResults.push(results);
 		    	displayResults(totalResults, ['Poster'], true);
 		    });
+		});
+
+		$('#anchorAbstractDiscussionInfo').click(function(){
+
+			var htmlAbstractName = 'OP_' + sessionToSearch + '.html';
+			showSessionAbstracts("public/abstracts/Webpages/" + htmlAbstractName);
+
 		});
 	}
 	else if(sessionToSearch=='DS2'){
@@ -189,6 +215,7 @@ function getPosterSessionInformation(rowData, allPosters, sessions){
 	$('#headersessionInfoTable').empty();
 	$('#bodysessionInfoTable').empty();
 	$('#sessionInfoSection').empty();
+	$('#AbstractsInfoSection').empty();
 	var toAppend = '';
 	toAppend += '<tr><td class="firstPosterColumn">Poster ID</td><td class="secondPosterColumn">Title</td><td class="thirdPosterColumn">Presenter</td></tr>';
 	$('#headersessionInfoTable').append(toAppend);
@@ -196,10 +223,13 @@ function getPosterSessionInformation(rowData, allPosters, sessions){
 	toAppend += '<p>Poster Session: ' + sessionToSearch + '</p>';
 	$('#sessionInfoSection').append(toAppend);
 	toAppend = '';
+
 	var currentIssue = -1;
 	for(i in allPosters[sessionToSearch].posters){
 		if (currentIssue != allPosters[sessionToSearch].posters[i].session_id){
-			toAppend += '<tr><td class="breakLine divider" style="text-align: center;"><h4><b>Session '+allPosters[sessionToSearch].posters[i].session_id +'</b></h4></td><td class="breakLine divider"><h4><b>' + sessions[allPosters[sessionToSearch].posters[i].session_id].subject + '</b></h4></td><td class="breakLine divider">&nbsp;</td></tr>';
+			toAppend += '<tr toclick="no"><td class="breakLine divider" style="text-align: center;"><h4><b>Session '+allPosters[sessionToSearch].posters[i].session_id +'</b></h4></td><td class="breakLine divider"><h4><b>' + sessions[allPosters[sessionToSearch].posters[i].session_id].subject + ' </b></h4></td><td class="breakLine divider">&nbsp;</td></tr>';
+			toAppend += '<tr toclick="no"><td style="text-align: center;">&nbsp;</td><td><a href="#abstracts-page" Session="'+allPosters[sessionToSearch].posters[i].session_id+'" class="ui-btn ui-icon-info ui-btn-icon-left ui-shadow ui-corner-all anchorPosterAbstractInfo">Abstracts</a></td><td>&nbsp;</td></tr>';
+			
 			currentIssue = allPosters[sessionToSearch].posters[i].session_id;
 		}
 		toAppend += '<tr><td class="firstPosterColumn" style="text-align: center;">' + i + '</td><td class="secondPosterColumn">' + allPosters[sessionToSearch].posters[i].title + '</td><td class="thirdPosterColumn">'+allPosters[sessionToSearch].posters[i].speaker+'</td></tr>';
@@ -211,15 +241,28 @@ function getPosterSessionInformation(rowData, allPosters, sessions){
 	$('#totalContentsessoinInfo').css({'display':'block'});
 
 	$('#sessionInfoTable tbody tr').click(function(){
-		var rowData = $(this).children("td").map(function() {
-	        return $(this).text();
-	    }).get();
 
-	    getPosterInformation(allPosters, sessions, rowData[1], 'listviewTitle', function(results){
-	    	var totalResults = [];
-			totalResults.push(results);
-	    	displayResults(totalResults, ['Poster'], true);
-	    });
+		if($(this).attr("toclick") != "no"){
+
+			var rowData = $(this).children("td").map(function() {
+		        return $(this).text();
+		    }).get();
+
+		    getPosterInformation(allPosters, sessions, rowData[1], 'listviewTitle', function(results){
+		    	var totalResults = [];
+				totalResults.push(results);
+		    	displayResults(totalResults, ['Poster'], true);
+		    });
+		}
+	});
+
+	$('.anchorPosterAbstractInfo').click(function(){
+
+		var sessionToUse = $(this).attr("Session");
+
+		var htmlAbstractName = 'PO_S' + sessionToUse + '.html';
+		showSessionAbstracts("public/abstracts/Webpages/" + htmlAbstractName);
+
 	});
 
 }
