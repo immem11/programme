@@ -10,5 +10,5 @@ id	subject	time	chairs
 9	Late Breaker Abstracts session	Friday,11th March 2016,17:30-19:00	Dag Harmsen and David Aanensen
 10	Molecular epidemiology and Public Health	Saturday,12th March 2016,08:30-10:00	Sylvie van der Werf and Marc Struelens
 IP1	Industry Session: Sponsored Talks by Applied Maths and Biomérieux	Thursday,10th March 2016,14:30-15:30	Alexander Friederich and Joao Andre Carrico
-DS1	Discussion Session: Genomic Epidemiology Ontologies	Friday,11th March 2016,13:30-14:30	João André Carriço and Mário Ramirez
+DS1	Discussion Session: Genomic Epidemiology Ontologies	Friday,11th March 2016,13:30-14:30	Fiona Brinkman and William Hsiao
 DS2	Discussion Session: Need for universal nomenclatures for strain/lineage identification	Friday,11th March 2016,14:30-15:30	Ivo Van Walle
